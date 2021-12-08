@@ -1,6 +1,6 @@
 package com.gsanchez.aoc.year2021
 
-import com.gsanchez.util.Files.{read, readAsInt}
+import com.gsanchez.util.Files.readAsInt
 
 object Day01 {
 
