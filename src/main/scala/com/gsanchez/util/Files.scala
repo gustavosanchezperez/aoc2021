@@ -8,4 +8,9 @@ object Files {
     Source.fromResource(resource).getLines().toSeq
   }
 
+  def readAsInt(resource: String): Seq[Int] = {
+    val input = read(resource)
+    input.map(_.toInt)
+  }
+
 }
