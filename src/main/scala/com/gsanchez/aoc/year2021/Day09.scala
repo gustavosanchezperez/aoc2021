@@ -2,6 +2,8 @@ package com.gsanchez.aoc.year2021
 
 import com.gsanchez.util.Files.read
 
+import scala.annotation.tailrec
+
 object Day09 {
 
   case class Location(pos: Int, height: Int) {}
@@ -21,6 +23,7 @@ object Day09 {
   def lowPoint(point: Int, neighbourgs: List[Location]): Boolean = neighbourgs.map(_.height).min > point
 
   def basin(loc: Location, hmap: List[Int], rs: Int): List[Int] = {
+    @tailrec
     def loop(nb: List[Location], bs: Set[Location]): Set[Location] = {
       if (nb.isEmpty) bs
       else {
@@ -41,7 +44,7 @@ object Day09 {
 
   def main(args: Array[String]): Unit = {
     val input = read("day09.txt")
-    val rowSz = input.head.size
+    val rowSz = input.head.length
     val i2 = input.map(_.toList).flatMap(_.map(c => Integer.parseInt(c.toString))).toList
 
     val lp = i2.zipWithIndex.foldLeft(List[Location]())((lowPoints, point) => {
