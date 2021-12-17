@@ -2,6 +2,8 @@ package com.gsanchez.aoc.year2021
 
 import com.gsanchez.util.Files.read
 
+import scala.annotation.tailrec
+
 object Day11 {
 
   case class Pos(col: Int, row: Int) {
@@ -34,7 +36,7 @@ object Day11 {
     val nb = for {
       c <- -1 to 1
       r <- -1 to 1
-      if (c != 0 || r != 0)
+      if c != 0 || r != 0
     } yield Pos(c, r)
     nb.foldLeft(List[Pos]())((adj, pos) => {
       pos + oct.pos :: adj
@@ -43,6 +45,7 @@ object Day11 {
   }
 
   def flashes(oc: OctopusCavern): List[Octopus] = {
+    @tailrec
     def loop(toflash: List[Octopus], alreadyFlashed: List[Octopus]): List[Octopus] = {
       //      println(s"loop| tf: ${toflash} .. af: ${alreadyFlashed}")
       if (toflash.nonEmpty) {
@@ -78,13 +81,17 @@ object Day11 {
     })
   }
 
+  def part2(oc: OctopusCavern): Int = LazyList.from(1).takeWhile(_ => tick(oc) != oc.length).last + 1
+
   def main(args: Array[String]): Unit = {
     val energy = read("day11.txt")
     val octopus = energy.map(_.toList).flatMap(_.map(c => Integer.parseInt(c.toString))).zipWithIndex.map(oct => {
       Octopus(Pos(oct._2 % 10, oct._2 / 10), oct._1)
     }).toArray
 
+    val oct2 = octopus.clone()
+
     println(s"Total flashes:  ${part1(octopus)}")
-    printc(octopus)
+    println(s"Step all flash:  ${part2(oct2)}")
   }
 }
